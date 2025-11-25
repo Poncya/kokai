@@ -1,0 +1,10 @@
+const app = require('../app');//アプリ本体を読み込む
+const http = require('http');
+const port = process.env.PORT || 3000;
+app.set('port', port);
+const server = http.createServer(app);//HTTPサーバーを作成
+server.listen(port, () => {//3000を起動
+console.log('Server listening on http://localhost:' + port);
+});
+
+//1まずここが起動してサーバーがたつ。

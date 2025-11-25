@@ -1,0 +1,71 @@
+<!DOCTYPE html><!-- 4 -->
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <title>My Blog</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="stylesheet" href="/styles.css" />
+</head>
+<body>
+  <!-- ヘッダー -->
+  <header class="header">
+    <div class="container header__inner">
+      <h1 class="brand">My Blog</h1>
+
+      <form class="search" action="/search" method="POST">
+        <label class="sr-only" for="q">キーワード検索</label>
+        <input id="q" name="keyword" type="text" placeholder="キーワード検索…" required />
+        <button class="btn btn--dark" type="submit">検索</button>
+      </form>
+    </div>
+  </header>
+
+  <main class="container">
+    <% if (error) { %><div class="alert alert--error"><%= error %></div><% } %>
+    <% if (message) { %><div class="alert alert--ok"><%= message %></div><% } %>
+
+    <!-- 新規投稿フォーム（淡いグレーのパネル） -->
+    <section class="panel">
+      <h2 class="panel__title">新しいブログを追加</h2>
+
+      <form action="/" method="POST" class="form">
+        <label class="form__field">
+          <span>タイトル:</span>
+          <input type="text" name="title" value="<%= (old && old.title) || '' %>" required />
+        </label>
+
+        <label class="form__field">
+          <span>投稿日:</span>
+          <input type="date" name="date" value="<%= (old && old.date) || '' %>" required />
+        </label>
+
+        <label class="form__field">
+          <span>内容:</span>
+          <textarea name="body" rows="5" placeholder="本文を入力" required><%= (old && old.body) || '' %></textarea>
+        </label>
+
+        <div class="form__actions">
+          <button class="btn btn--dark" type="submit">追加</button>
+        </div>
+      </form>
+    </section>
+
+    <!-- 投稿一覧（白カード） -->
+    <section class="stack-lg">
+      <% if (!posts || posts.length === 0) { %>
+        <div class="card">
+          <p class="muted">まだ投稿はありません。</p>
+        </div>
+      <% } else { %>
+        <% posts.forEach(p => { %>
+          <article class="card">
+            <h3 class="card__title"><%= p.title %></h3>
+            <p class="meta">投稿日: <%= p.date %></p>
+            <p class="card__body"><%= p.body %></p>
+          </article>
+        <% }) %>
+      <% } %>
+    </section>
+  </main>
+</body>
+</html>
