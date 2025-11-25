@@ -1,0 +1,18 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = "file:./dev.db"
+}
+
+model Post {
+  id        Int      @id @default(autoincrement())
+  title     String
+  date      String   // "YYYY-MM-DD" の文字列で保存
+  body      String
+  createdAt DateTime @default(now())
+}
+
+
